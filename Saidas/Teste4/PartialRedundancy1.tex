@@ -1,0 +1,66 @@
+\section{Elimina\c{c}\~ao de Redund\^ancias Parciais}
+
+
+\subsection{Express\~ao Redundante}
+
+Uma express\~ao \'e \emph{redundante} no ponto $p$ se em cada caminho at\'e $p$:
+\begin{enumerate}
+  \item Ela \'e avaliada antes de alcan\c{c}ar $p$, e
+  \item Nenhum de seus operandos constituintes \'e redefinido antes de $p$.
+\end{enumerate}
+
+Por exemplo, na Equa\c{c}\~ao~\ref{eq:ExpRed}, as ocorr\^encias de express\~oes em negrito s\~ao redundantes.
+
+\begin{equation}
+\centering
+  \xymatrix {
+    \txt{$a \leftarrow b+c$\\$a \leftarrow \mathbf{b+c}$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl] \\
+                   & \txt{$a \leftarrow \mathbf{b+c}$} \ar[dl] \ar[dr] & \\
+    \txt{$a \leftarrow \mathbf{b+c}$} & & \txt{$b \leftarrow 1$\\$a \leftarrow b+c$} 
+  }
+\label{eq:ExpRed}
+\end{equation}
+
+Uma express\~ao \'e \emph{parcialmente redundante} no ponto $p$ se ela \'e redundante ao longo de alguns caminhos, mas n\~ao todos, at\'e $p$.
+
+Por exemplo, na Equa\c{c}\~ao~\ref{eq:ExpParRed}, a express\~ao $b+c$ em negrido no diagrama da esquerda \'e parcialmente redundante.
+A inser\c{c}\~ao de uma c\'opia de $b+c$ depois da defini\c{c}\~ao de $b$ pode tornar uma express\c{c}\~ao parcialmente redundante em uma totalmente redundante como mostra o diagrama da direita.
+
+\begin{equation}
+\centering
+  \xymatrix {
+    \txt{$b \leftarrow b+1$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl] & \txt{$b \leftarrow b+1$\\$a \leftarrow b+c$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl]\\
+     & \txt{$a \leftarrow \mathbf{b+c}$} & & & \txt{$a \leftarrow \mathbf{b+c}$} & \\
+  }
+\label{eq:ExpParRed}
+\end{equation}
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c|c}
+	& ENTRY & $B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ & EXIT \\
+\hline
+e\_gen & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{01\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ \\
+e\_kill & $\{00\}$ & $\{11\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ \\
+anticipated\_out & $\{00\}$ & $\{10\}$ & $\{10\}$ & $\{10\}$ & $\{00\}$ & $\{10\}$ & $\{10\}$ & $\{00\}$ \\
+anticipated\_in & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{11\}$ & $\{10\}$ & $\{10\}$ & $\{10\}$ & $\{00\}$ \\
+available\_in & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{10\}$ & $\{11\}$ & $\{10\}$ \\
+available\_out & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{11\}$ & $\{10\}$ & $\{10\}$ & $\{11\}$ & $\{10\}$ \\
+earliest & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{11\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ \\
+ &  &  &  &  &  &  &  &  \\
+postponable\_in & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ \\
+postponable\_out & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ \\
+latest & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{01\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ \\
+used\_out & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{10\}$ & $\{00\}$ \\
+used\_in & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ \\
+ &  &  &  &  &  &  &  &  \\
+$cond\_1$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ \\
+$cond\_2$ & $\{00\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ & $\{10\}$ & $\{00\}$ & $\{00\}$ & $\{00\}$ \\
+\\
+\end{tabular}
+\caption{Elimina\c{c}\~ao de Redund\^ancias Parciais --- $((+,\:b,\:c), (+,\:b,\:1))$}
+\end{table}
+
+
+

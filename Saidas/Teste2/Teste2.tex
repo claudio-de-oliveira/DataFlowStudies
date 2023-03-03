@@ -1,0 +1,125 @@
+\documentclass[landscape]{article}
+\usepackage{graphicx}
+
+%\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[all]{xy}
+
+\usepackage {vmargin}           % para setar formato da página + facilmente
+\usepackage {color}
+
+% Dimensões a ocupar na página (package Vmargin)
+\setpapersize [landscape]{A4}
+\setmarginsrb {25mm} % margem esquerda
+              {25mm} % margem topo
+              {20mm} % margem direita
+              {20mm} % margem pé
+              {2ex}  % altura do espaço para cabeçalho
+              {2ex}  % espaço entre fim do cabeçalho e início do texto
+              {2ex}  % altura do espaço para rodapé
+              {2ex}  % espaço entre fim do texto e fim do rodapé
+
+\begin{document}
+
+\input ReachableDefinitions.tex
+\clearpage
+
+\input LiveVariable.tex
+\clearpage
+
+\input AvailableExpressions.tex
+\clearpage
+
+\input AnticipableExpressions.tex
+\clearpage
+
+\input PartiallyAvailableExpressions.tex
+\clearpage
+
+\input DeadVariable.tex
+\clearpage
+
+\input DefinitionsForCopyPropagation.tex
+\clearpage
+
+\input PartialRedundancy1.tex
+\clearpage
+
+\input ConstantPropagation.tex
+\clearpage
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$b:=4$\\}}*\frm{-,}="B1";
+(0, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$t_{10}:=4+c$\\$a:=t_{10}$\\}}*\frm{-,}="B2";
+(0, -45)
+	*++{\txt{$\mathbf{B_{3}}$\\$t_{11}:=a*4$\\$d:=t_{11}$\\$if\:1\:goto\:@6$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$t_{12}:=a-c$\\$b:=t_{12}$\\$goto\:@18$\\}}*\frm{-,}="B4";
+(25, -75)
+	*++{\txt{$\mathbf{B_{5}}$\\$c:=t_{10}$\\$if\:1\:goto\:@11$\\}}*\frm{-,}="B5";
+(25, -60)
+	*++{\txt{$\mathbf{B_{6}}$\\$t_{14}:=a+4$\\}}*\frm{-,}="B6";
+(0, -165)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+(50, -90)
+	*++{\txt{$\mathbf{B_{8}}$\\$c:=t_{11}$\\}}*\frm{-,}="B8";
+(50, -105)
+	*++{\txt{$\mathbf{B_{9}}$\\$t_{5}:=a-4$\\$param\:t_{5}$\\$goto\:@15$\\}}*\frm{-,}="B9";
+(0, -105)
+	*++{\txt{$\mathbf{B_{10}}$\\$d:=t_{14}$\\$goto\:@13$\\}}*\frm{-,}="B10";
+(0, -90)
+	*++{\txt{$\mathbf{B_{11}}$\\$t_{10}:=4+c$\\}}*\frm{-,}="B11";
+(-25, -135)
+	*++{\txt{$\mathbf{B_{12}}$\\}}*\frm{-,}="B12";
+(0, -120)
+	*++{\txt{$\mathbf{B_{13}}$\\$t_{6}:=t_{10}$\\$param\:t_{6}$\\$if\:1\:goto\:@12$\\}}*\frm{-,}="B13";
+(25, -150)
+	*++{\txt{$\mathbf{B_{14}}$\\$t_{7}:=t_{14}$\\$param\:t_{7}$\\$if\:1\:goto\:@7$\\}}*\frm{-,}="B14";
+(50, -120)
+	*++{\txt{$\mathbf{B_{15}}$\\$t_{10}:=4+c$\\}}*\frm{-,}="B15";
+(25, -135)
+	*++{\txt{$\mathbf{B_{16}}$\\}}*\frm{-,}="B16";
+(-25, -90)
+	*++{\txt{$\mathbf{B_{17}}$\\$t_{8}:=t_{12}$\\$param\:t_{8}$\\}}*\frm{-,}="B17";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{18}}$\\$t_{10}:=b+c$\\}}*\frm{-,}="B18";
+(50, -165)
+	*++{\txt{$\mathbf{B_{19}}$\\$t_{12}:=a-c$\\}}*\frm{-,}="B19";
+(-25, -105)
+	*++{\txt{$\mathbf{B_{20}}$\\$t_{9}:=t_{10}$\\$param\:t_{9}$\\}}*\frm{-,}="B20";
+(-25, -120)
+	*++{\txt{$\mathbf{B_{21}}$\\}}*\frm{-,}="B21";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B3" **@{.} ?> *{\dir{>}};
+"B3";"B4" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B18" **@{.} ?> *{\dir{>}};
+"B5";"B11" **@{.} ?> *{\dir{>}};
+"B5";"B8" **@{.} ?> *{\dir{>}};
+"B6";"B5" **@{.} ?> *{\dir{>}};
+"B7";"B5" **@{.} ?> *{\dir{>}};
+"B8";"B9" **@{.} ?> *{\dir{>}};
+"B9";"B15" **@{.} ?> *{\dir{>}};
+"B10";"B13" **@{.} ?> *{\dir{>}};
+"B11";"B10" **@{.} ?> *{\dir{>}};
+"B12";"B10" **@{.} ?> *{\dir{>}};
+"B13";"B12" **@{.} ?> *{\dir{>}};
+"B13";"B16" **@{.} ?> *{\dir{>}};
+"B14";"B7" **@{.} ?> *{\dir{>}};
+"B14";"B19" **@{.} ?> *{\dir{>}};
+"B15";"B14" **@{.} ?> *{\dir{>}};
+"B16";"B14" **@{.} ?> *{\dir{>}};
+"B17";"B20" **@{.} ?> *{\dir{>}};
+"B18";"B17" **@{.} ?> *{\dir{>}};
+"B19";"B17" **@{.} ?> *{\dir{>}};
+"B20";"B21" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+\end{document}
+

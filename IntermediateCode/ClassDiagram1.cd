@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AbstractMachine.IntermediateCode" Collapsed="true">
+    <Position X="13.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEgBBAIAQABAUCAAAAAQICIQQEAAACACAAABCCAE=</HashCode>
+      <FileName>AbstractCode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Address">
+    <Position X="11.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAQABAAAQAhAQAAAQAAAAAAIAAAAgAAAAAAiA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Name" Collapsed="true">
+    <Position X="11.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAEAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Label" Collapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <InheritanceLine Type="AbstractMachine.Address" FixedToPoint="true">
+      <Path>
+        <Point X="12" Y="5.423" />
+        <Point X="12" Y="5.723" />
+        <Point X="14.688" Y="5.723" />
+        <Point X="14.688" Y="6" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAEgAAAAAAAAAAAAIAAABAgAAAQAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Value" Collapsed="true">
+    <Position X="8.5" Y="6" Width="1.5" />
+    <InheritanceLine Type="AbstractMachine.Address" FixedToPoint="true">
+      <Path>
+        <Point X="12" Y="5.423" />
+        <Point X="12" Y="5.723" />
+        <Point X="9.25" Y="5.723" />
+        <Point X="9.25" Y="6" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAYAUAIAhAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Constant" Collapsed="true">
+    <Position X="8.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAEgAAAAAAAAAAAAMAAAAAgAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Undef" Collapsed="true">
+    <Position X="10.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAAAMAAAAAAAAAEAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Nac" Collapsed="true">
+    <Position X="6.75" Y="7" Width="1.5" />
+    <InheritanceLine Type="AbstractMachine.Value" FixedToPoint="true">
+      <Path>
+        <Point X="9.25" Y="6.63" />
+        <Point X="9.25" Y="6.808" />
+        <Point X="7.5" Y="6.808" />
+        <Point X="7.5" Y="7" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAEgAAAAAAAAAAAAMAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.TAC" Collapsed="true">
+    <Position X="13.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAADAAAAAwAEgAAAAAAAAAAAAIAAAAAIAAAACAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.IntermediateInstruction">
+    <Position X="2.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAKAAAAKAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Nop" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <InheritanceLine Type="AbstractMachine.IntermediateInstruction" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="2.902" />
+        <Point X="4" Y="3.815" />
+        <Point X="4.75" Y="3.815" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Binary" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Unary" Collapsed="true">
+    <Position X="4.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Copy" Collapsed="true">
+    <Position X="1.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Goto" Collapsed="true">
+    <Position X="1.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.IfTrue" Collapsed="true">
+    <Position X="1.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.IfFalse">
+    <Position X="1.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.IfExp" Collapsed="true">
+    <Position X="4.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Param" Collapsed="true">
+    <Position X="4.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Call">
+    <Position X="4.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Return" Collapsed="true">
+    <Position X="1.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.ToArray" Collapsed="true">
+    <Position X="1.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.FromArray" Collapsed="true">
+    <Position X="1.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.AddressOf" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <InheritanceLine Type="AbstractMachine.IntermediateInstruction" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="2.902" />
+        <Point X="4" Y="3.812" />
+        <Point X="3.25" Y="3.812" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.FromMemory" Collapsed="true">
+    <Position X="4.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.ToMemory" Collapsed="true">
+    <Position X="4.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.Block" Collapsed="true">
+    <Position X="13.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMICAECABAAAgAAEaAAiAUACIABAAAAIAAQCAAAEAgA=</HashCode>
+      <FileName>Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.ArrayOfBlock" Collapsed="true">
+    <Position X="10.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAABAECAABBAQAAAAAAAAQIAAAgAAABAA=</HashCode>
+      <FileName>Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AbstractMachine.DataFlow" Collapsed="true">
+    <Position X="12" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCMBAAAEAAQAICEAiAACACAAAEgAAgAAQEAAAFABAA=</HashCode>
+      <FileName>DataFlow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.BitSet" Collapsed="true">
+    <Position X="12" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIAAAAAAAAAAhEE7BECBARAEEAAAJAAAAAECQAAByA=</HashCode>
+      <FileName>BitSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.MAP" Collapsed="true">
+    <Position X="10.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEiAACAAAAAAAQAIAAAgAAAAAAAiA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.Optimization">
+    <Position X="19.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAKABAAAAABJAAAQQAABAEABAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.ReachableDefinition" Collapsed="true">
+    <Position X="22.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.DefinitionsForCopyPropagation" Collapsed="true">
+    <Position X="19.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.LiveVariable" Collapsed="true">
+    <Position X="16.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.DeadVariable" Collapsed="true">
+    <Position X="18.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.AvailableExpressions" Collapsed="true">
+    <Position X="20.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAIAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.PartiallyAvailableExpressions" Collapsed="true">
+    <Position X="17.75" Y="6.75" Width="1.5" />
+    <InheritanceLine Type="IntermediateCode.Optimization" ManuallyRouted="true">
+      <Path>
+        <Point X="20.5" Y="5.388" />
+        <Point X="20.5" Y="5.7" />
+        <Point X="18.5" Y="5.7" />
+        <Point X="18.5" Y="6.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAkAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.AnticipableExpressions" Collapsed="true">
+    <Position X="21.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAABAAAAAAABAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.ConstantPropagation" Collapsed="true">
+    <Position X="10.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAQAEgAACAAAAAAAAgAAAQAAABAkABAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntermediateCode.PartialRedundancy" Collapsed="true">
+    <Position X="12" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAEgAACAAAAAAAAgAAAQAAABAkABAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="IntermediateCode.Info" Collapsed="true">
+    <Position X="10.25" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAABAAAAAAAAAAAQIAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="IntermediateCode.Info2" Collapsed="true">
+    <Position X="12" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="IntermediateCode.Info3" Collapsed="true">
+    <Position X="13.75" Y="16" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAEAAAABEAAAAAAAAgAQYAAAAAgAEAAACAgQ=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="AbstractMachine.Operator" Collapsed="true">
+    <Position X="12" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TAIQAAQAAAAGKoYQAAAIIIAAAAFIgACYAAAAEAAAAIA=</HashCode>
+      <FileName>AbstractMachine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IntermediateCode.Meet" Collapsed="true">
+    <Position X="10.25" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Optimization.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

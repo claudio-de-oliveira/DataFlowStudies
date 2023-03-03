@@ -1,0 +1,16 @@
+$\mathbf{B_{ 0}}:\emptyset$
+$\mathbf{B_{ 1}}:\{i:=0,\;j:=0\}$
+$\mathbf{B_{ 2}}:\{t_{8}:=4*n,\;v:=a[t_{8}]\}$
+$\mathbf{B_{ 3}}:\{i:=i+1\}$
+$\mathbf{B_{ 4}}:\{t_{9}:=4*i,\;t_{10}:=a[t_{9}],\;if\:t_{10}<v\:goto\:@11\}$
+$\mathbf{B_{ 5}}:\{j:=j-1\}$
+$\mathbf{B_{ 6}}:\{t_{11}:=4*j,\;t_{12}:=a[t_{11}],\;if\:t_{12}>v\:goto\:@14\}$
+$\mathbf{B_{ 7}}:\{if\:i>=j\:goto\:@9\}$
+$\mathbf{B_{ 8}}:\{x:=t_{10},\;a[t_{9}]:=t_{12},\;a[t_{11}]:=x,\;goto\:@12$\}$
+$\mathbf{B_{ 9}}:\{x:=t_{10},\;t_{13}:=a[t_{8}],\;a[t_{9}]:=t_{13},\;a[t_{8}]:=x\}$
+$\mathbf{B_{10}}:\emptyset$
+$\mathbf{B_{11}}:\emptyset$
+$\mathbf{B_{12}}:\emptyset$
+$\mathbf{B_{13}}:\emptyset$
+$\mathbf{B_{14}}:\emptyset$
+$\mathbf{B_{15}}:\emptyset$

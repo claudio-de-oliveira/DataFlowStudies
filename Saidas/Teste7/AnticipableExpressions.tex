@@ -1,0 +1,34 @@
+\section{Disponibilidade de Express\~oes Anticip\'aveis}
+
+A an\'alise \'e para tr\'as (\textsf{backward}) e sua inten\c{c}\~ao \'e determinar em cada ponto do c\'odigo, quais express\~oes podem ser movidas para o in\'icio do bloco (ou para blocos antecedentes).
+\begin{itemize}
+  \item[$Gen$] Indica quais express\~oes podem ser movidas para o in\'icio do bloco (ou para blocos antecedentes).
+  \item[$Kill$] Indica quais express\~oes (considerando o universo inteiro) foram mortas por redefini\c{c}\~oes (anteriores~\footnote{S\'o faz sentido em an\'alises internas ao bloco.}) de seus operandos que ocorrem dentro do bloco.
+  \item[$IN$] Indica quais express\~oes podem ser movidas para blocos antecedentes.
+  \item[$OUT$] Indica quais express\~oes de blocos subsequ\^entes podem ser movidas para o final do bloco atual -- estas express\~oes podem ou n\~ao serem antecipadas pelo bloco atual.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|l|l|l|l}
+	& Gen & Kill & IN & OUT\\
+\hline
+$B_{1}$ &  $0$ & $1$ & $0$ & $0$\\
+$B_{2}$ &  $1$ & $0$ & $1$ & $1$\\
+$B_{3}$ &  $0$ & $1$ & $0$ & $1$\\
+$B_{4}$ &  $1$ & $0$ & $1$ & $1$\\
+$B_{5}$ &  $1$ & $0$ & $1$ & $1$\\
+$B_{6}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{7}$ &  $1$ & $0$ & $1$ & $1$\\
+$B_{8}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{9}$ &  $1$ & $0$ & $1$ & $0$\\
+$B_{10}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{11}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{12}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{13}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{14}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{15}$ &  $0$ & $0$ & $1$ & $1$\\
+\end{tabular}
+\caption{Disponibilidade de Express\~oes Anticip\'aveis --- $((+,\:b,\:c))$}
+\end{table}
+

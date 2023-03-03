@@ -1,0 +1,114 @@
+\section{Alcan\c{c}abilidade de Defini\c{c}\~oes}
+
+\begin{itemize}
+  \item[$Gen$] ...
+  \item[$Kill$] ...
+  \item[$IN$] ...
+  \item[$OUT$] ...
+\end{itemize}
+
+C\'odigo Original:
+
+\begin{table}[ht]
+\begin{scriptsize}
+\begin{tabular}{l|l|l|l|l|l}
+$B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ \\
+\hline
+$\{0\}$ & $\{1\}$ & $\{1\}$ & $\{5, 6\}$ & $\{2\}$ & $\{3\}$ \\
+$\{3, 2\}$ & $\{5\}$ & $\{6\}$ & $\{7\}$ & $\{4\}$ & $\{4\}$ \\
+\hline\
+$if\:0\:goto\:@3$ & $a:=b+c$ & $e:=7$ & $d:=b+c$ & $nop$ & $nop$ \\
+ & $goto\:@5$ &  &  &  &  \\
+\end{tabular}
+\end{scriptsize}
+\end{table}
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$a:=b+c$\\$goto\:@5$\\}}*\frm{-,}="B2";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$e:=7$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$d:=b+c$\\}}*\frm{-,}="B4";
+(25, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\}}*\frm{-,}="B5";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{6}}$\\}}*\frm{-,}="B6";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B5" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B7" **@{.} ?> *{\dir{>}};
+"B5";"B4" **@{.} ?> *{\dir{>}};
+"B6";"B4" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+C\'odigo Otimizado:
+
+\begin{table}[ht]
+\begin{scriptsize}
+\begin{tabular}{l|l|l|l|l|l}
+$B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ \\
+\hline
+$\{0\}$ & $\{1\}$ & $\{1\}$ & $\{5, 6\}$ & $\{2\}$ & $\{3\}$ \\
+$\{3, 2\}$ & $\{5\}$ & $\{6\}$ & $\{7\}$ & $\{4\}$ & $\{4\}$ \\
+\hline\
+$if\:0\:goto\:@3$ & $a:=b+c$ & $e:=7$ & $d:=b+c$ & $nop$ & $nop$ \\
+ & $goto\:@5$ &  &  &  &  \\
+\end{tabular}
+\end{scriptsize}
+\end{table}
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$a:=b+c$\\$goto\:@5$\\}}*\frm{-,}="B2";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$e:=7$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$d:=b+c$\\}}*\frm{-,}="B4";
+(25, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\}}*\frm{-,}="B5";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{6}}$\\}}*\frm{-,}="B6";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B5" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B7" **@{.} ?> *{\dir{>}};
+"B5";"B4" **@{.} ?> *{\dir{>}};
+"B6";"B4" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|l|l|l|l}
+	& Gen & Kill & IN & OUT\\
+\hline
+$B_{1}$ &  $000$ & $000$ & $000$ & $000$\\
+$B_{2}$ &  $100$ & $100$ & $000$ & $100$\\
+$B_{3}$ &  $010$ & $010$ & $000$ & $010$\\
+$B_{4}$ &  $001$ & $001$ & $110$ & $111$\\
+$B_{5}$ &  $000$ & $000$ & $100$ & $100$\\
+$B_{6}$ &  $000$ & $000$ & $010$ & $010$\\
+\end{tabular}
+\caption{Alcan\c{c}abilidade de Defini\c{c}\~oes --- $(a:=b+c, e:=7, d:=b+c)$}
+\end{table}
+

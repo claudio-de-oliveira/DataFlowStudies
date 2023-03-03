@@ -1,0 +1,35 @@
+\section{Disponibilidade de Express\~oes Anticip\'aveis}
+
+A an\'alise \'e para tr\'as (\textsf{backward}) e sua inten\c{c}\~ao \'e determinar em cada ponto do c\'odigo, quais express\~oes podem ser movidas para o in\'icio do bloco (ou para blocos antecedentes).
+\begin{itemize}
+  \item[$Gen$] Indica quais express\~oes podem ser movidas para o in\'icio do bloco (ou para blocos antecedentes).
+  \item[$Kill$] Indica quais express\~oes (considerando o universo inteiro) foram mortas por redefini\c{c}\~oes (anteriores~\footnote{S\'o faz sentido em an\'alises internas ao bloco.}) de seus operandos que ocorrem dentro do bloco.
+  \item[$IN$] Indica quais express\~oes podem ser movidas para blocos antecedentes.
+  \item[$OUT$] Indica quais express\~oes de blocos subsequ\^entes podem ser movidas para o final do bloco atual -- estas express\~oes podem ou n\~ao serem antecipadas pelo bloco atual.
+\end{itemize}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|l|l|l|l}
+	& Gen & Kill & IN & OUT\\
+\hline
+$B_{1}$ &  $00000$ & $11111$ & $00000$ & $00000$\\
+$B_{2}$ &  $00100$ & $11011$ & $00100$ & $10100$\\
+$B_{3}$ &  $10000$ & $10100$ & $10001$ & $00001$\\
+$B_{4}$ &  $01010$ & $10100$ & $01011$ & $10001$\\
+$B_{5}$ &  $00001$ & $00000$ & $10001$ & $10001$\\
+$B_{6}$ &  $10000$ & $00000$ & $10001$ & $10001$\\
+$B_{7}$ &  $00001$ & $00000$ & $10001$ & $10000$\\
+$B_{8}$ &  $10100$ & $00000$ & $10100$ & $00000$\\
+$B_{9}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{10}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{11}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{12}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{13}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{14}$ &  $00000$ & $00000$ & $10001$ & $10001$\\
+$B_{15}$ &  $00000$ & $00000$ & $10100$ & $10100$\\
+$B_{16}$ &  $00000$ & $00000$ & $10100$ & $10100$\\
+\end{tabular}
+\caption{Disponibilidade de Express\~oes Anticip\'aveis --- $((+,\:b,\:c), (*,\:a,\:b), (-,\:a,\:c), (-,\:a,\:b), (+,\:a,\:b))$}
+\end{table}
+

@@ -1,0 +1,33 @@
+\section{Disponibilidade de Express\~oes}
+
+A an\'alise \'e para frente (\textsf{forward}) e sua inten\c{c}\~ao \'e determinar em cada ponto do c\'odigo, quais express\~oes est\~ao dispon\'iveis, isto \'e, foram seguramente executadas e, caso fossem executadas novamente (naquele ponto) produziriam o mesmo resultado.
+\begin{itemize}
+  \item[$Gen$] Indica quais express\~oes foram geradas dentro do bloco e que n\~ao foram ``mortas'' por redefini\c{c}\~oes de seus operandos dentro do mesmo bloco. {\color{red} \'E igual \`a entrada das express\~oes antecip\'aveis}.
+  \item[$Kill$] Indica quais express\~oes (considerando o universo inteiro) foram mortas por redefini\c{c}\~oes (posteriores~\footnote{S\'o faz sentido em an\'alises internas ao bloco.}) de seus operandos que ocorrem dentro do bloco.
+  \item[$IN$] Indica quais express\~oes est\~ao dispon\'iveis na entrada do bloco. \'E uma interse\c{c}\~ao das sa\'idas dos blocos predecessores.
+  \item[$OUT$] Indica quais express\~oes est\~ao dispon\'iveis na sa\'ida do bloco. {\color{red} \'E igual ao \'ultimo $Gen$}.
+\end{itemize}
+
+
+\xymatrix{
+  & \{e_1,e_2,e_3\} \ar[dl]\ar[d]\ar[dr] & \\
+  \{e_1,e_2\} \ar[d]\ar[dr] & \{e_1,e_3\} \ar[dl]\ar[dr] & \{e_2,e_3\} \ar[d]\ar[dl] \\
+  \{e_1\} \ar[dr] & \{e_2\} \ar[d] & \{e_3\} \ar[dl] \\
+  & \emptyset & \\
+}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|l|l|l|l}
+	& Gen & Kill & IN & OUT\\
+\hline
+$B_{1}$ &  $0$ & $0$ & $0$ & $0$\\
+$B_{2}$ &  $1$ & $0$ & $0$ & $1$\\
+$B_{3}$ &  $0$ & $0$ & $0$ & $0$\\
+$B_{4}$ &  $1$ & $0$ & $0$ & $1$\\
+$B_{5}$ &  $0$ & $0$ & $1$ & $1$\\
+$B_{6}$ &  $0$ & $0$ & $0$ & $0$\\
+\end{tabular}
+\caption{Disponibilidade de Express\~oes --- $((+,\:b,\:c))$}
+\end{table}
+

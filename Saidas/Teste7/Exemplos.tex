@@ -1,0 +1,815 @@
+\subsection{Exemplos}
+
+\subsubsection{Exemplo 1}
+
+\begin{tikzpicture}[->,>=stealth']
+
+ \node[state] (B0)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{0}}$}}
+ };
+
+\node[state,
+  below of=B0,
+  node distance=1.5cm,
+  anchor=center] (B1)
+ {%
+ \textcolor{blue}{$\mathbf{B_{1}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$i:=0$}\\
+ {\color{orange!30!black}$j:=0$}
+ \end{tabular}
+ };
+
+% STATE QUERYREP
+\node[state,
+  below of=B1,
+%  yshift=-2cm,
+  node distance=1.5cm,
+  anchor=center] (B2)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{2}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{8}:=4*n$}\\
+ {\color{orange!30!black}$v:=a[t_{8}]$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B2,
+  node distance=1.5cm,
+  anchor=center] (B10)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{10}}$}}
+ };
+
+\node[state,
+  below of=B10,
+  node distance=1.25cm,
+  anchor=center] (B3)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{3}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$i:=i+1$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B3,
+  node distance=1.5cm,
+  anchor=center] (B4)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{4}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{9}:=4*i$}\\
+ {\color{orange!30!black}$t_{10}:=a[t_{9}]$}\\
+ {\color{orange!30!black}$if\:t_{10}<v\:goto\:@11$}
+ \end{tabular}
+ };
+
+\node[state,
+  left of=B3,
+  node distance=3cm,
+  anchor=center] (B11)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{11}}$}}
+ };
+
+\node[state,
+  below of=B4,
+  node distance=1.5cm,
+  anchor=center] (B13)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{13}}$}}
+ };
+
+\node[state,
+  below of=B13,
+  node distance=1.25cm,
+  anchor=center] (B5)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{5}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$j:=j-1$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B5,
+  node distance=1.5cm,
+  anchor=center] (B6)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{6}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{11}:=4*j$}\\
+ {\color{orange!30!black}$t_{12}:=a[t_{11}]$}\\
+ {\color{orange!30!black}$if\:t_{12}>v\:goto\:@14$}
+ \end{tabular}
+ };
+
+\node[state,
+  left of=B5,
+  node distance=3cm,
+  anchor=center] (B14)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{14}}$}}
+ };
+
+\node[state,
+  below of=B6,
+  node distance=1.5cm,
+  anchor=center] (B7)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{7}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$if\:i>=j\:goto\:@9$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B7,
+  node distance=2cm,
+  anchor=center] (B9)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{9}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$x:=t_{10}$}\\
+ {\color{orange!30!black}$t_{13}:=a[t_{8}]$}\\
+ {\color{orange!30!black}$a[t_{9}]:=t_{13}$}\\
+ {\color{orange!30!black}$a[t_{8}]:=x$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B9,
+  node distance=2cm,
+  anchor=center] (B15)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{15}}$}}
+ };
+
+\node[state,
+  right of=B7,
+  node distance=5cm,
+  anchor=center] (B8)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{8}}$}}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$x:=t_{10}$}\\
+ {\color{orange!30!black}$a[t_{9}]:=t_{12}$}\\
+ {\color{orange!30!black}$a[t_{11}]:=x$}\\
+ {\color{orange!30!black}$goto\:@12$}
+ \end{tabular}
+ };
+
+\node[state,
+  right of=B3,
+  node distance=3cm,
+  anchor=center] (B12)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{12}}$}}
+ };
+
+
+ % draw the paths and and print some Text below/above the graph
+ \path (B0)     edge[color = Peach, myarrow] (B1)
+ (B1)           edge[color = Peach, myarrow] (B2)
+ (B2)           edge[color = Peach, myarrow] (B10)
+ (B3)           edge[color = Peach, myarrow] (B4)
+ (B4)           edge[color = Peach, myarrow] (B13)
+                edge[color = Peach, myarrow, bend left=30] (B11)
+ (B5)           edge[color = Peach, myarrow] (B6)
+ (B6)           edge[color = Peach, myarrow] (B7)
+                edge[color = Peach, myarrow, bend left=30] (B14)
+ (B7)           edge[color = Peach, myarrow] (B8)
+                edge[color = Peach, myarrow] (B9)
+ (B8)           edge[color = Peach, myarrow, bend right=30] (B12)
+ (B9)           edge[color = Peach, myarrow] (B15)
+ (B10)          edge[color = Peach, myarrow] (B3)
+ (B11)          edge[color = Peach, myarrow] (B3)
+ (B12)          edge[color = Peach, myarrow] (B3)
+ (B13)          edge[color = Peach, myarrow] (B5)
+ (B14)          edge[color = Peach, myarrow] (B5)
+;
+
+\end{tikzpicture}
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$i:=0$\\$j:=0$\\}}*\frm{-,}="B1";
+(0, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$t_{8}:=4*n$\\$v:=a[t_{8}]$\\}}*\frm{-,}="B2";
+(0, -60)
+	*++{\txt{$\mathbf{B_{3}}$\\$i:=i+1$\\}}*\frm{-,}="B3";
+(0, -75)
+	 *++{\txt{$\mathbf{B_{4}}$\\$t_{9}:=4*i$\\$t_{10}:=a[t_{9}]$\\$if\:t_{10}<v\:goto\:@11$\\}}*\frm{-,}="B4";
+(25, -105)
+	*++{\txt{$\mathbf{B_{5}}$\\$j:=j-1$\\}}*\frm{-,}="B5";
+(25, -120)
+	 *++{\txt{$\mathbf{B_{6}}$\\$t_{11}:=4*j$\\$t_{12}:=a[t_{11}]$\\$if\:t_{12}>v\:goto\:@14$\\}}*\frm{-,}="B6";
+(0, -135)
+	*++{\txt{$\mathbf{B_{7}}$\\$if\:i>=j\:goto\:@9$\\}}*\frm{-,}="B7";
+(25, -150)
+	 *++{\txt{$\mathbf{B_{8}}$\\$x:=t_{10}$\\$a[t_{9}]:=t_{12}$\\$a[t_{11}]:=x$\\$goto\:@12$\\}}*\frm{-,}="B8";
+(-25, -150)
+	 *++{\txt{$\mathbf{B_{9}}$\\$x:=t_{10}$\\$t_{13}:=a[t_{8}]$\\$a[t_{9}]:=t_{13}$\\$a[t_{8}]:=x$\\}}*\frm{-,}="B9";
+(0, -45)
+	*++{\txt{$\mathbf{B_{10}}$\\}}*\frm{-,}="B10";
+(-25, -90)
+	*++{\txt{$\mathbf{B_{11}}$\\}}*\frm{-,}="B11";
+(25, -165)
+	*++{\txt{$\mathbf{B_{12}}$\\}}*\frm{-,}="B12";
+(25, -90)
+	*++{\txt{$\mathbf{B_{13}}$\\}}*\frm{-,}="B13";
+(50, -135)
+	*++{\txt{$\mathbf{B_{14}}$\\}}*\frm{-,}="B14";
+(-25, -165)
+	*++{\txt{$\mathbf{B_{15}}$\\}}*\frm{-,}="B15";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B10" **@{.} ?> *{\dir{>}};
+"B3";"B4" **@{.} ?> *{\dir{>}};
+"B4";"B11" **@{.} ?> *{\dir{>}};
+"B4";"B13" **@{.} ?> *{\dir{>}};
+"B5";"B6" **@{.} ?> *{\dir{>}};
+"B6";"B7" **@{.} ?> *{\dir{>}};
+"B6";"B14" **@{.} ?> *{\dir{>}};
+"B7";"B9" **@{.} ?> *{\dir{>}};
+"B7";"B8" **@{.} ?> *{\dir{>}};
+"B8";"B12" **@{.} ?> *{\dir{>}};
+"B9";"B15" **@{.} ?> *{\dir{>}};
+"B10";"B3" **@{.} ?> *{\dir{>}};
+"B11";"B3" **@{.} ?> *{\dir{>}};
+"B12";"B3" **@{.} ?> *{\dir{>}};
+"B13";"B5" **@{.} ?> *{\dir{>}};
+"B14";"B5" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+
+\subsubsection{Exemplo 3}
+
+\begin{tikzpicture}[->,>=stealth']
+
+ \node[state] (B0)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{0}}$}}
+ };
+
+\node[state,
+  below of=B0,
+  node distance=1.5cm,
+  anchor=center] (B1)
+ {%
+ \textcolor{blue}{$\mathbf{B_{1}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$a:=4$}\\
+ {\color{orange!30!black}$b:=5$}\\
+ {\color{orange!30!black}$if\:d\:goto\:@5$}
+ \end{tabular}
+ };
+
+\node[
+  right of=B1,
+  node distance=3cm,
+  anchor=center] (B1R)
+ {};%
+\node[
+  left of=B1,
+  node distance=3cm,
+  anchor=center] (B1L)
+ {};%
+
+\node[state,
+  below of=B1L,
+  node distance=1.5cm,
+  anchor=center] (B5)
+ {%
+ \textcolor{blue}{$\mathbf{B_{5}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$a:=4$}\\
+ {\color{orange!30!black}$goto\:@10$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B1R,
+  node distance=1.5cm,
+  anchor=center] (B2)
+ {%
+ \textcolor{blue}{$\mathbf{B_{2}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$b:=5$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B5,
+  node distance=1.5cm,
+  anchor=center] (B10)
+ {%
+ \textcolor{blue}{$\mathbf{B_{10}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{5}:=4+5$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B2,
+  node distance=1.5cm,
+  anchor=center] (B3)
+ {%
+ \textcolor{blue}{$\mathbf{B_{3}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{5}:=4+5$}\\
+ {\color{orange!30!black}$c:=9$}\\
+ {\color{orange!30!black}$if\:d\:goto\:@9$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B10,
+  node distance=2.5cm,
+  anchor=center] (B6)
+ {%
+ \textcolor{blue}{$\mathbf{B_{6}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$c:=t_{5}$}\\
+ {\color{orange!30!black}$a:=5$}\\
+ {\color{orange!30!black}$b:=c$}\\
+ {\color{orange!30!black}$d:=b$}\\
+ {\color{orange!30!black}$goto\:@7$}
+ \end{tabular}
+ };
+
+\node[state,
+  left of=B6,
+  node distance=3cm,
+  anchor=center] (B11)
+ {%
+ \textcolor{blue}{$\mathbf{B_{11}}$}
+ };
+
+\node[state,
+  right of=B6,
+  node distance=3cm,
+  anchor=center] (B9)
+ {%
+ \textcolor{blue}{$\mathbf{B_{9}}$}
+ };
+
+\node[state,
+  below of=B3,
+  node distance=2cm,
+  anchor=center] (B4)
+ {%
+ \textcolor{blue}{$\mathbf{B_{4}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$goto\:@12$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B4,
+  node distance=1.5cm,
+  anchor=center] (B12)
+ {%
+ \textcolor{blue}{$\mathbf{B_{12}}$}
+ };
+
+\node[state,
+  below of=B12,
+  node distance=1.5cm,
+  anchor=center] (B8)
+ {%
+ \textcolor{blue}{$\mathbf{B_{8}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$c:=t_{5}$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B8,
+  node distance=1.5cm,
+  anchor=center] (B14)
+ {%
+ \textcolor{blue}{$\mathbf{B_{14}}$}
+ };
+
+\node[state,
+  below of=B6,
+  node distance=2.5cm,
+  anchor=center] (B7)
+ {%
+ \textcolor{blue}{$\mathbf{B_{7}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{5}:=5+b$}\\
+ {\color{orange!30!black}$c:=t_{5}$}\\
+ {\color{orange!30!black}$if\:d\:goto\:@11$}
+ \end{tabular}
+ };
+
+\node[state,
+  right of=B7,
+  node distance=3cm,
+  anchor=center] (B13)
+ {%
+ \textcolor{blue}{$\mathbf{B_{13}}$}
+ };
+
+ \path (B0)     edge[color = Peach, myarrow] (B1)
+ (B1)           edge[color = Peach, myarrow] (B2)
+                edge[color = Peach, myarrow] (B5)
+ (B2)           edge[color = Peach, myarrow] (B3)
+ (B3)           edge[color = Peach, myarrow] (B4)
+                edge[color = Peach, myarrow] (B9)
+ (B4)           edge[color = Peach, myarrow] (B12)
+ (B12)          edge[color = Peach, myarrow] (B8)
+ (B8)           edge[color = Peach, myarrow] (B14)
+ (B5)           edge[color = Peach, myarrow] (B10)
+ (B10)          edge[color = Peach, myarrow] (B6)
+ (B6)           edge[color = Peach, myarrow] (B7)
+ (B11)          edge[color = Peach, myarrow] (B6)
+ (B9)           edge[color = Peach, myarrow] (B6)
+ (B7)           edge[color = Peach, myarrow] (B13)
+ (B13)          edge[color = Peach, myarrow] (B8)
+ (B7)           edge[color = Peach, myarrow, bend left=30] (B11)
+;
+
+\end{tikzpicture}
+
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$a:=4$\\$b:=5$\\$if\:d\:goto\:@5$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$b:=5$\\}}*\frm{-,}="B2";
+(25, -45)
+	 *++{\txt{$\mathbf{B_{3}}$\\$t_{5}:=4+5$\\$c:=9$\\$if\:d\:goto\:@9$\\}}*\frm{-,}="B3";
+(25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$goto\:@12$\\}}*\frm{-,}="B4";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{5}}$\\$a:=4$\\$goto\:@10$\\}}*\frm{-,}="B5";
+(-25, -65)
+	 *++{\txt{$\mathbf{B_{6}}$\\$c:=t_{5}$\\$a:=5$\\$b:=c$\\$d:=b$\\$goto\:@7$\\}}*\frm{-,}="B6";
+(-25, -90)
+	 *++{\txt{$\mathbf{B_{7}}$\\$t_{5}:=5+b$\\$c:=t_{5}$\\$if\:d\:goto\:@11$\\}}*\frm{-,}="B7";
+(25, -90)
+	*++{\txt{$\mathbf{B_{8}}$\\$c:=t_{5}$\\}}*\frm{-,}="B8";
+(50, -60)
+	*++{\txt{$\mathbf{B_{9}}$\\}}*\frm{-,}="B9";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{10}}$\\$t_{5}:=4+5$\\}}*\frm{-,}="B10";
+(-50, -90)
+	*++{\txt{$\mathbf{B_{11}}$\\}}*\frm{-,}="B11";
+(25, -75)
+	*++{\txt{$\mathbf{B_{12}}$\\}}*\frm{-,}="B12";
+(0, -90)
+	*++{\txt{$\mathbf{B_{13}}$\\}}*\frm{-,}="B13";
+(25, -105)
+	*++{\txt{$\mathbf{B_{14}}$\\}}*\frm{-,}="B14";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B5" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B3" **@{.} ?> *{\dir{>}};
+"B3";"B4" **@{.} ?> *{\dir{>}};
+"B3";"B9" **@{.} ?> *{\dir{>}};
+"B4";"B12" **@{.} ?> *{\dir{>}};
+"B5";"B10" **@{.} ?> *{\dir{>}};
+"B6";"B7" **@{.} ?> *{\dir{>}};
+"B7";"B11" **@{.} ?> *{\dir{>}};
+"B7";"B13" **@{.} ?> *{\dir{>}};
+"B8";"B14" **@{.} ?> *{\dir{>}};
+"B9";"B6" **@{.} ?> *{\dir{>}};
+"B10";"B6" **@{.} ?> *{\dir{>}};
+"B11";"B6" **@{.} ?> *{\dir{>}};
+"B12";"B8" **@{.} ?> *{\dir{>}};
+"B13";"B8" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+
+\subsubsection{Exemplo 7}
+
+\begin{tikzpicture}[->,>=stealth']
+
+ \node[state] (B0)
+ {%
+ \textcolor{blue}{\txt{$\mathbf{B_{0}}$}}
+ };
+
+\node[state,
+  below of=B0,
+  node distance=1.5cm,
+  anchor=center] (B1)
+ {%
+ \textcolor{blue}{$\mathbf{B_{1}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$b:=1$}\\
+ {\color{orange!30!black}$if\:0\:goto\:@3$}
+ \end{tabular}
+ };
+
+\node[
+  right of=B1,
+  node distance=3cm,
+  anchor=center] (B1R)
+ {};%
+\node[
+  left of=B1,
+  node distance=3cm,
+  anchor=center] (B1L)
+ {};%
+
+\node[state,
+  below of=B1R,
+  node distance=1.5cm,
+  anchor=center] (B3)
+ {%
+ \textcolor{blue}{$\mathbf{B_{3}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$b:=7$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B3,
+  node distance=1.5cm,
+  anchor=center] (B4)
+ {%
+ \textcolor{blue}{$\mathbf{B_{4}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{6}:=7+c$}\\
+ {\color{orange!30!black}$d:=t_{6}$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B4,
+  node distance=1.5cm,
+  anchor=center] (B12)
+ {%
+ \textcolor{blue}{$\mathbf{B_{12}}$}
+ };
+
+\node[state,
+  below of=B1L,
+  node distance=1.5cm,
+  anchor=center] (B2)
+ {%
+ \textcolor{blue}{$\mathbf{B_{2}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$t_{6}:=1+c$}\\
+ {\color{orange!30!black}$a:=t_{6}$}\\
+ {\color{orange!30!black}$goto\:@11$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B2,
+  node distance=1.5cm,
+  anchor=center] (B11)
+ {%
+ \textcolor{blue}{$\mathbf{B_{11}}$}
+};
+
+\node[state,
+  below of=B11,
+  node distance=1.5cm,
+  anchor=center] (B5)
+ {%
+ \textcolor{blue}{$\mathbf{B_{5}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$e:=t_{6}$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B5,
+  node distance=1.5cm,
+  anchor=center] (B13)
+ {%
+ \textcolor{blue}{$\mathbf{B_{13}}$}
+ };
+
+\node[state,
+  below of=B13,
+  node distance=1.5cm,
+  anchor=center] (B6)
+ {%
+ \textcolor{blue}{$\mathbf{B_{6}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$a:=t_{6}$}\\
+ {\color{orange!30!black}$if\:0\:goto\:@14$}
+ \end{tabular}
+ };
+
+\node[state,
+  right of=B6,
+  node distance=3cm,
+  anchor=center] (B14)
+ {%
+ \textcolor{blue}{$\mathbf{B_{14}}$}
+ };
+
+\node[state,
+  below of=B6,
+  node distance=1.5cm,
+  anchor=center] (B7)
+ {%
+ \textcolor{blue}{$\mathbf{B_{7}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$if\:0\:goto\:@9$}
+ \end{tabular}
+ };
+
+\node[
+  right of=B7,
+  node distance=3cm,
+  anchor=center] (B7R)
+ {};%
+\node[
+  left of=B7,
+  node distance=3cm,
+  anchor=center] (B7L)
+ {};%
+
+\node[state,
+  below of=B7L,
+  node distance=1.5cm,
+  anchor=center] (B9)
+ {%
+ \textcolor{blue}{$\mathbf{B_{9}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$goto\:@16$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B7R,
+  node distance=1.5cm,
+  anchor=center] (B8)
+ {%
+ \textcolor{blue}{$\mathbf{B_{8}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$a:=t_{6}$}\\
+ {\color{orange!30!black}$goto\:@15$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B8,
+  node distance=1.5cm,
+  anchor=center] (B15)
+ {%
+ \textcolor{blue}{$\mathbf{B_{15}}$}
+ };
+
+\node[state,
+  below of=B9,
+  node distance=1.5cm,
+  anchor=center] (B16)
+ {%
+ \textcolor{blue}{$\mathbf{B_{16}}$}
+ };
+
+\node[state,
+  below of=B16,
+  node distance=1.5cm,
+  anchor=center] (B10)
+ {%
+ \textcolor{blue}{$\mathbf{B_{10}}$}
+ \begin{tabular}{|l}
+ {\color{orange!30!black}$d:=t_{6}$}
+ \end{tabular}
+ };
+
+\node[state,
+  below of=B10,
+  node distance=1.5cm,
+  anchor=center] (B17)
+ {%
+ \textcolor{blue}{$\mathbf{B_{17}}$}
+ };
+
+ \path (B0)     edge[color = Peach, myarrow] (B1)
+ (B1)           edge[color = Peach, myarrow] (B2)
+                edge[color = Peach, myarrow] (B3)
+ (B2)           edge[color = Peach, myarrow] (B11)
+ (B3)           edge[color = Peach, myarrow] (B4)
+ (B4)           edge[color = Peach, myarrow] (B12)
+ (B12)          edge[color = Peach, myarrow] (B5)
+ (B11)          edge[color = Peach, myarrow] (B5)
+ (B5)           edge[color = Peach, myarrow] (B13)
+ (B13)          edge[color = Peach, myarrow] (B6)
+ (B6)           edge[color = Peach, myarrow] (B7)
+                edge[color = Peach, myarrow, bend right=40] (B14)
+ (B14)          edge[color = Peach, myarrow, bend right=40] (B6)
+ (B7)           edge[color = Peach, myarrow] (B8)
+                edge[color = Peach, myarrow] (B9)
+ (B8)           edge[color = Peach, myarrow] (B15)
+ (B9)           edge[color = Peach, myarrow] (B16)
+ (B15)          edge[color = Peach, myarrow] (B10)
+ (B16)          edge[color = Peach, myarrow] (B10)
+ (B10)          edge[color = Peach, myarrow] (B17)
+;
+\end{tikzpicture}
+
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$b:=1$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$t_{6}:=1+c$\\$a:=t_{6}$\\$goto\:@11$\\}}*\frm{-,}="B2";
+(25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$b:=7$\\}}*\frm{-,}="B3";
+(25, -45)
+	*++{\txt{$\mathbf{B_{4}}$\\$t_{6}:=7+c$\\$d:=t_{6}$\\}}*\frm{-,}="B4";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{5}}$\\$e:=t_{6}$\\}}*\frm{-,}="B5";
+(-25, -90)
+	*++{\txt{$\mathbf{B_{6}}$\\$a:=t_{6}$\\$if\:0\:goto\:@14$\\}}*\frm{-,}="B6";
+(-50, -105)
+	*++{\txt{$\mathbf{B_{7}}$\\$if\:0\:goto\:@9$\\}}*\frm{-,}="B7";
+(-25, -120)
+	*++{\txt{$\mathbf{B_{8}}$\\$a:=t_{6}$\\$goto\:@15$\\}}*\frm{-,}="B8";
+(-75, -120)
+	*++{\txt{$\mathbf{B_{9}}$\\$goto\:@16$\\}}*\frm{-,}="B9";
+(-75, -150)
+	*++{\txt{$\mathbf{B_{10}}$\\$d:=t_{6}$\\}}*\frm{-,}="B10";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{11}}$\\}}*\frm{-,}="B11";
+(25, -60)
+	*++{\txt{$\mathbf{B_{12}}$\\}}*\frm{-,}="B12";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{13}}$\\}}*\frm{-,}="B13";
+(0, -105)
+	*++{\txt{$\mathbf{B_{14}}$\\}}*\frm{-,}="B14";
+(-25, -135)
+	*++{\txt{$\mathbf{B_{15}}$\\}}*\frm{-,}="B15";
+(-75, -135)
+	*++{\txt{$\mathbf{B_{16}}$\\}}*\frm{-,}="B16";
+(-75, -165)
+	*++{\txt{$\mathbf{B_{17}}$\\}}*\frm{-,}="B17";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B2";"B11" **@{.} ?> *{\dir{>}};
+"B3";"B4" **@{.} ?> *{\dir{>}};
+"B4";"B12" **@{.} ?> *{\dir{>}};
+"B5";"B13" **@{.} ?> *{\dir{>}};
+"B6";"B7" **@{.} ?> *{\dir{>}};
+"B6";"B14" **@{.} ?> *{\dir{>}};
+"B7";"B9" **@{.} ?> *{\dir{>}};
+"B7";"B8" **@{.} ?> *{\dir{>}};
+"B8";"B15" **@{.} ?> *{\dir{>}};
+"B9";"B16" **@{.} ?> *{\dir{>}};
+"B10";"B17" **@{.} ?> *{\dir{>}};
+"B11";"B5" **@{.} ?> *{\dir{>}};
+"B12";"B5" **@{.} ?> *{\dir{>}};
+"B13";"B6" **@{.} ?> *{\dir{>}};
+"B14";"B6" **@{.} ?> *{\dir{>}};
+"B15";"B10" **@{.} ?> *{\dir{>}};
+"B16";"B10" **@{.} ?> *{\dir{>}};
+\endxy
+
+
+\begin{tabular}{rllllllllll}
+0 & $i:=0$ & @0: & $nop$ & @0: & $nop$ & @0: & $nop$ & @0: & $nop$ & \\
+1 & $j:=0$ & @1: & $i:=0$ & @1: & $i:=0$ & @1: & $i:=0$ & @1: & $i:=0$ & \\
+2 & $t_{8}:=4*n$ &  & $j:=0$ &  & $j:=0$ &  & $j:=0$ &  & $j:=0$ & \\
+3 & $v:=a[t_{8}]$ &  & $t_{8}:=4*n$ &  & $t_{8}:=4*n$ & @2: & $t_{8}:=4*n$ & @2: & $t_{8}:=4*n$ & \\
+4 & $i:=i+1$ &  & $v:=a[t_{8}]$ &  & $v:=a[t_{8}]$ &  & $v:=a[t_{8}]$ &  & $v:=a[t_{8}]$ & \\
+5 & $t_{9}:=4*i$ & @2: & $i:=i+1$ & @7: & & @10: & & @4: & & \\
+6 & $t_{10}:=a[t_{9}]$ &  & $t_{9}:=4*i$ & @8: & & @11: & & @5: & & \\
+7 & $if\:t_{10}<v\:goto\:4$ &  & $t_{10}:=a[t_{9}]$ & @9: & & @12: & & @6: & & \\
+8 & $j:=j-1$ &  & $if\:t_{10}<v\:goto\:@2$ & @2: & $i:=i+1$ & @3: & $i:=i+1$ & @3: & $i:=i+1$ & \\
+9 & $t_{11}:=4*j$ & @3: & $j:=j-1$ &  & $t_{9}:=4*i$ & @4: & $t_{9}:=4*i$ & @7: & $t_{9}:=4*i$ & \\
+10 & $t_{12}:=a[t_{11}]$ &  & $t_{11}:=4*j$ &  & $t_{10}:=a[t_{9}]$ &  & $t_{10}:=a[t_{9}]$ &  & $t_{10}:=a[t_{9}]$ & \\
+11 & $if\:t_{12}>v\:goto\:8$ &  & $t_{12}:=a[t_{11}]$ &  & $if\:t_{10}<v\:goto\:@8$ &  & $if\:t_{10}<v\:goto\:@11$ &  & $if\:t_{10}<v\:goto\:@5$ & \\
+12 & $if\:i>=j\:goto\:17$ &  & $if\:t_{12}>v\:goto\:@3$ & @10: & & @13: & & @9: & & \\
+13 & $x:=t_{10}$ & @4: & $if\:i>=j\:goto\:@6$ & @11: & & @14: & & @10: & & \\
+14 & $a[t_{9}]:=t_{12}$ & @5: & $x:=t_{10}$ & @3: & $j:=j-1$ & @5: & $j:=j-1$ & @8: & $j:=j-1$ & \\
+15 & $a[t_{11}]:=x$ &  & $a[t_{9}]:=t_{12}$ &  & $t_{11}:=4*j$ & @6: & $t_{11}:=4*j$ & @11: & $t_{11}:=4*j$ & \\
+16 & $goto\:4$ &  & $a[t_{11}]:=x$ &  & $t_{12}:=a[t_{11}]$ &  & $t_{12}:=a[t_{11}]$ &  & $t_{12}:=a[t_{11}]$ & \\
+17 & $x:=t_{10}$ &  & $goto\:@2$ &  & $if\:t_{12}>v\:goto\:@11$ &  & $if\:t_{12}>v\:goto\:@14$ &  & $if\:t_{12}>v\:goto\:@10$ & \\
+18 & $t_{13}:=a[t_{8}]$ & @6: & $x:=t_{10}$ & @4: & $if\:i>=j\:goto\:@6$ & @7: & $if\:i>=j\:goto\:@9$ & @12: & $if\:i>=j\:goto\:@14$ & \\
+19 & $a[t_{9}]:=t_{13}$ &  & $t_{13}:=a[t_{8}]$ & @5: & $x:=t_{10}$ & @8: & $x:=t_{10}$ & @13: & $x:=t_{10}$ & \\
+20 & $a[t_{8}]:=x$ &  & $a[t_{9}]:=t_{13}$ &  & $a[t_{9}]:=t_{12}$ &  & $a[t_{9}]:=t_{12}$ &  & $a[t_{9}]:=t_{12}$ & \\
+ & &  & $a[t_{8}]:=x$ &  & $a[t_{11}]:=x$ &  & $a[t_{11}]:=x$ &  & $a[t_{11}]:=x$ & \\
+ & &  & &  & $goto\:@9$ &  & $goto\:@12$ &  & $goto\:@6$ & \\
+ & &  & & @6: & $x:=t_{10}$ & @9: & $x:=t_{10}$ & @14: & $x:=t_{10}$ & \\
+ & &  & &  & $t_{13}:=a[t_{8}]$ &  & $t_{13}:=a[t_{8}]$ &  & $t_{13}:=a[t_{8}]$ & \\
+ & &  & &  & $a[t_{9}]:=t_{13}$ &  & $a[t_{9}]:=t_{13}$ &  & $a[t_{9}]:=t_{13}$ & \\
+ & &  & &  & $a[t_{8}]:=x$ &  & $a[t_{8}]:=x$ &  & $a[t_{8}]:=x$ & \\
+\end{tabular}
+
+\end{scriptsize}

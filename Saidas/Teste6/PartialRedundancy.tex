@@ -1,0 +1,157 @@
+\section{Elimina\c{c}\~ao de Redund\^ancias Parciais}
+
+
+\subsection{Express\~ao Redundante}
+
+Uma express\~ao \'e \emph{redundante} no ponto $p$ se em cada caminho at\'e $p$:
+\begin{enumerate}
+  \item Ela \'e avaliada antes de alcan\c{c}ar $p$, e
+  \item Nenhum de seus operandos constituintes \'e redefinido antes de $p$.
+\end{enumerate}
+
+Por exemplo, na Equa\c{c}\~ao~\ref{eq:ExpRed}, as ocorr\^encias de express\~oes em negrito s\~ao redundantes.
+
+\begin{equation}
+\centering
+  \xymatrix {
+    \txt{$a \leftarrow b+c$\\$a \leftarrow \mathbf{b+c}$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl] \\
+                   & \txt{$a \leftarrow \mathbf{b+c}$} \ar[dl] \ar[dr] & \\
+    \txt{$a \leftarrow \mathbf{b+c}$} & & \txt{$b \leftarrow 1$\\$a \leftarrow b+c$} 
+  }
+\label{eq:ExpRed}
+\end{equation}
+
+Uma express\~ao \'e \emph{parcialmente redundante} no ponto $p$ se ela \'e redundante ao longo de alguns caminhos, mas n\~ao todos, at\'e $p$.
+
+Por exemplo, na Equa\c{c}\~ao~\ref{eq:ExpParRed}, a express\~ao $b+c$ em negrido no diagrama da esquerda \'e parcialmente redundante.
+A inser\c{c}\~ao de uma c\'opia de $b+c$ depois da defini\c{c}\~ao de $b$ pode tornar uma express\c{c}\~ao parcialmente redundante em uma totalmente redundante como mostra o diagrama da direita.
+
+\begin{equation}
+\centering
+  \xymatrix {
+    \txt{$b \leftarrow b+1$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl] & \txt{$b \leftarrow b+1$\\$a \leftarrow b+c$} \ar[dr] & & \txt{$a \leftarrow b+c$} \ar[dl]\\
+     & \txt{$a \leftarrow \mathbf{b+c}$} & & & \txt{$a \leftarrow \mathbf{b+c}$} & \\
+  }
+\label{eq:ExpParRed}
+\end{equation}
+
+
+C\'odigo Original:
+
+\begin{table}[ht]
+\begin{scriptsize}
+\begin{tabular}{l|l|l|l|l|l}
+$B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ \\
+\hline
+$\{0\}$ & $\{1\}$ & $\{1\}$ & $\{5, 6\}$ & $\{2\}$ & $\{3\}$ \\
+$\{3, 2\}$ & $\{5\}$ & $\{6\}$ & $\{7\}$ & $\{4\}$ & $\{4\}$ \\
+\hline\
+$if\:0\:goto\:@3$ & $a:=b+c$ & $e:=7$ & $d:=b+c$ & $nop$ & $nop$ \\
+ & $goto\:@5$ &  &  &  &  \\
+\end{tabular}
+\end{scriptsize}
+\end{table}
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$a:=b+c$\\$goto\:@5$\\}}*\frm{-,}="B2";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$e:=7$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$d:=b+c$\\}}*\frm{-,}="B4";
+(25, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\}}*\frm{-,}="B5";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{6}}$\\}}*\frm{-,}="B6";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B5" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B7" **@{.} ?> *{\dir{>}};
+"B5";"B4" **@{.} ?> *{\dir{>}};
+"B6";"B4" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+C\'odigo Otimizado:
+
+\begin{table}[ht]
+\begin{scriptsize}
+\begin{tabular}{l|l|l|l|l|l}
+$B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ \\
+\hline
+$\{0\}$ & $\{1\}$ & $\{1\}$ & $\{5, 6\}$ & $\{2\}$ & $\{3\}$ \\
+$\{3, 2\}$ & $\{5\}$ & $\{6\}$ & $\{7\}$ & $\{4\}$ & $\{4\}$ \\
+\hline\
+$if\:0\:goto\:@3$ & $t_{6}:=b+c$ & $e:=7$ & $d:=t_{6}$ & $nop$ & $t_{6}:=b+c$ \\
+ & $a:=t_{6}$ &  &  &  & $nop$ \\
+ & $goto\:@5$ &  &  &  &  \\
+\end{tabular}
+\end{scriptsize}
+\end{table}
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$t_{6}:=b+c$\\$a:=t_{6}$\\$goto\:@5$\\}}*\frm{-,}="B2";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$e:=7$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$d:=t_{6}$\\}}*\frm{-,}="B4";
+(25, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\}}*\frm{-,}="B5";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{6}}$\\$t_{6}:=b+c$\\}}*\frm{-,}="B6";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B5" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B7" **@{.} ?> *{\dir{>}};
+"B5";"B4" **@{.} ?> *{\dir{>}};
+"B6";"B4" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l|c|c|c|c|c|c|c|c}
+	& ENTRY & $B_{1}$ & $B_{2}$ & $B_{3}$ & $B_{4}$ & $B_{5}$ & $B_{6}$ & EXIT \\
+\hline
+e\_gen & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
+e\_kill & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
+anticipated\_out & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ \\
+anticipated\_in & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ \\
+available\_in & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ \\
+available\_out & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ & $\{1\}$ \\
+earliest & $\{1\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
+ &  &  &  &  &  &  &  &  \\
+postponable\_in & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ \\
+postponable\_out & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ \\
+latest & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ \\
+used\_out & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ \\
+used\_in & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ \\
+ &  &  &  &  &  &  &  &  \\
+$cond\_1$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ \\
+$cond\_2$ & $\{0\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{1\}$ & $\{0\}$ & $\{0\}$ & $\{0\}$ \\
+\\
+\end{tabular}
+\caption{Elimina\c{c}\~ao de Redund\^ancias Parciais --- $((+,\:b,\:c))$}
+\end{table}
+
+
+

@@ -1,0 +1,61 @@
+\documentclass[landscape]{article}
+\usepackage{graphicx}
+
+%\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[all]{xy}
+
+\usepackage {vmargin}           % para setar formato da página + facilmente
+\usepackage {color}
+
+% Dimensões a ocupar na página (package Vmargin)
+\setpapersize [landscape]{A4}
+\setmarginsrb {25mm} % margem esquerda
+              {25mm} % margem topo
+              {20mm} % margem direita
+              {20mm} % margem pé
+              {2ex}  % altura do espaço para cabeçalho
+              {2ex}  % espaço entre fim do cabeçalho e início do texto
+              {2ex}  % altura do espaço para rodapé
+              {2ex}  % espaço entre fim do texto e fim do rodapé
+
+\begin{document}
+
+\input ReachableDefinition
+\clearpage
+
+\input LiveVariable
+\clearpage
+
+\input PartialRedundancy
+\clearpage
+
+\input ConstantPropagation
+\clearpage
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$b:=0$\\$c:=1$\\}}*\frm{-,}="B1";
+(0, -60)
+	*++{\txt{$\mathbf{B_{2}}$\\$a:=1$\\$if\:0\:goto\:@4$\\}}*\frm{-,}="B2";
+(0, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\}}*\frm{-,}="B3";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{4}}$\\}}*\frm{-,}="B4";
+(0, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\$t_{4}:=0+1$\\}}*\frm{-,}="B5";
+(25, -75)
+	*++{\txt{$\mathbf{B_{6}}$\\}}*\frm{-,}="B6";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B2";"B4" **@{.} ?> *{\dir{>}};
+"B2";"B6" **@{.} ?> *{\dir{>}};
+"B3";"B5" **@{.} ?> *{\dir{>}};
+"B4";"B2" **@{.} ?> *{\dir{>}};
+"B5";"B2" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+\end{document}

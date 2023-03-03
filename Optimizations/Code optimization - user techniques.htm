@@ -1,0 +1,611 @@
+
+<!-- saved from url=(0055)http://www.ibiblio.org/pub/languages/fortran/ch1-9.html -->
+<HTML><HEAD><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<TITLE> Code optimization - user techniques </TITLE>
+</HEAD><BODY>
+<PRE>
+ 1-9 CODE OPTIMIZATION - USER TECHNIQUES
+ ***************************************
+ (Thanks to Craig Burley for the excellent comments.
+  Thanks to Timothy Prince for the important comments)
+
+ FORTRAN is used for heavy number crunching, and often decreasing the 
+ running time of a program is desirable, however, it shouldn't be set
+ as a primary goal except on special cases.
+
+ While doing manual optimizations, it's a good idea to check the code
+ also from a numerical point of view. At least, avoid optimizations 
+ that may lead to accuracy deterioration. 
+
+
+ The need for profiling
+ ----------------------
+ Since it's common that programs spend most of the execution time in 
+ a few small parts of the code (usually some loops), it is recommended 
+ to perform first "profiling", i.e. analysis of the relative execution 
+ time spent in different parts of the program. 
+
+ Profiling is also important when you apply optimizations, compilers 
+ and computer hardware are complicated systems, and the results of 
+ applying an optimization may be hard to guess. 
+
+
+ Optimizations that can't be done automatically
+ ----------------------------------------------
+ There are some optimizations you can do, which a compiler can't, 
+ for example: 
+
+   1) Using a fast algorithm
+   2) Using unformatted I/O
+   3) Using higher optimizations levels
+   4) Performing "aggressive" manual optimization
+   5) Writing in assembly language
+
+
+ Using a fast algorithm
+ ----------------------
+ A good optimization is choosing a fast algorithm. 
+ Other types of optimizations probably can't make linear sort (a N**2 
+ algorithm) compete with heapsort (N*logN) for long sequences, or make 
+ a Runge-Kutta integrator compete with a Rosenbruck integrator for 
+ very stiff problems. 
+
+ Make yourself familiar with basic good algorithms. See the chapter on 
+ literature for references to some classic books on algorithmics.
+ 
+
+ Using unformatted I/O
+ ---------------------
+ Unformatted I/O is often better because:
+
+   1) The CPU intensive translation from internal and external 
+      representation is avoided. 
+
+   2) The radix conversion and roundoff errors associated 
+      with the translation are avoided, so the accuracy 
+      of computations involving numbers written to, and 
+      then read back from a file increases. 
+
+   3) It is more efficient because unformatted data takes
+      less space, hence more data can be passed in each 
+      I/O operation, and less (slow) operations are used.
+
+   4) The resulting data files are smaller.
+
+ The disadvantages of unformatted I/O are that data files are not 
+ portable to other systems, and cannot be edited and studied directly
+ by a text editor such as EVE, Emacs or vi.
+
+
+ Classification of optimizations types
+ -------------------------------------
+ Optimizations that are performed automatically by a compiler or manually
+ by the programmer, can be classified by various characteristics.
+
+ The "scope" of the optimization:
+
+   1) Local optimizations - Performed in a part of one procedure.
+
+        1) Common sub-expression elimination (e.g. those 
+           occurring when translating array indices to memory
+           addresses. 
+        2) Using registers for temporary results, and if 
+           possible for variables.
+        3) Replacing multiplication and division by shift
+           and add operations. 
+
+   2) Global optimizations - Performed with the help of data flow
+      analysis (see below) and split-lifetime analysis.
+
+        1) Code motion (hoisting) outside of loops
+        2) Value propagation
+        3) Strength reductions
+
+   3) Inter-procedural optimizations - 
+
+
+ What is improved in the optimization:
+
+   1) Space optimizations - Reduces the size of the executable/object.
+
+        1) Constant pooling 
+        2) Dead-code elimination.
+
+   2) Speed optimizations - Most optimizations belong to this category
+
+
+ There are important optimizations not covered above, e.g. the various
+ loop transformations:
+
+   1) Loop unrolling - Full or partial transformation of 
+      a loop into straight code
+
+   2) Loop blocking (tiling) - Minimizes cache misses by 
+      replacing each array processing loop into two loops, 
+      dividing the "iteration space" into smaller "blocks"
+
+   3) Loop interchange - Change the nesting order of loops,
+      may make it possible to perform other transformations
+
+   4) Loop distribution - Replace a loop by two (or more)
+      equivalent loops
+
+   5) Loop fusion - Make one loop out of two (or more)
+
+
+
+ Automatic/Manual Optimizations  
+ ------------------------------
+ A good compiler can automatically perform many code optimizations, 
+ for example: 
+
+   1) Alignment of data
+   2) Proper loop nesting
+   3) Procedure inlining 
+   4) Loop unrolling
+   5) Loop blocking (tiling)  
+   6) Local optimizations
+
+ Manually performing this optimizations is recommended, as long as
+ program clarity is not affected adversely.
+
+
+ Alignment of data
+ -----------------
+ See the chapter on data alignment for information on the influence
+ of data alignment on performance.
+
+
+ Proper loop nesting
+ -------------------
+ Operating systems (except DOS) don't have to load all of your program 
+ into memory during execution, the memory your program needs to store 
+ code or data is partitioned into pages, and the pages are read and 
+ written from and to the disk as necessary.
+
+ Computers use memory caches to reduce memory references. The cache is 
+ a small and fast memory unit, when you reference a memory location, 
+ the cache automatically saves the memory locations nearby. Later, if 
+ you reference a memory location that happens to be in the cache it can 
+ be brought much faster.
+
+ The way memory management and caches work has important implications 
+ on array processing, it determines the nesting order of loops that
+ process multi-dimensional arrays.
+
+ FORTRAN arrays with more than one index are stored in memory in a 
+ 'reverse' order (relative to C). For example a two-dimensional array 
+ is stored column after column. Such storage scheme is called a 
+ 'column major' or 'column first' scheme. 
+
+ When you have large matrices that you process element after element, 
+ you may save a lot of CPU consuming paging activity, and a lot of 
+ 'cache misses', if you nest your loops properly:
+
+      DO 100 J=1,50
+        DO 200 I=1,50
+          A(I,J) = 0.5 * A(I,J)
+200     CONTINUE
+100   CONTINUE
+
+ The inner loop runs over the left matrix index. so when you run the 
+ program, memory references to the matrix don't jump back and forth, 
+ they progress a step at a time over the matrix. In this way page faults 
+ are minimized and the cache is utilized efficiently.
+
+ Similar considerations apply to IMPLIED-DO loops in I/O statements, 
+ for similar reasons.
+
+
+ Procedure inlining
+ ------------------
+ This is an efficient language-independent optimization technique.
+ Done manually, it makes your program look horrible, but many compilers
+ can perform it automatically. Note that this technique enlarges the 
+ size of the executable.
+
+ Procedure inlining eliminates the overhead of procedure calls, 
+ instead of keeping a single copy of a procedure's code and inserting 
+ repeatedly the code required to call it, the compiler inserts the 
+ procedure's code itself every time it is needed. In this way the 
+ execution of the CALLING SEQUENCEs is eliminated at the small price 
+ of enlarging the executable file. These transformation is even more 
+ effective on highly pipelined CPUs.
+
+
+ Loop unrolling
+ --------------
+ This is another efficient language-independent optimization technique.
+ Note that it also enlarges the size of the executable.
+
+ There is overhead inherent in every loop, upon initializing the loop, 
+ and on every iteration (see the chapter on DO loops), the overhead 
+ may be larger if the loop does little, e.g. initialization loops. 
+ Eliminating the loop and writing code separately for each loop index 
+ significantly increases speed .
+
+ On every iteration of a DO loop some operations must be performed:
+
+    1) Decrementing the loop counter
+    2) Checking if further iterations are needed
+    3) If #2 is positive, modify the loop variable
+       and jump to the start of the loop. 
+       If #2 is negative exit the loop
+
+ Saving loop iterations saves all this "book keeping" operations.
+ Loop unrolling is even more effective on highly pipelined CPUs, 
+ without it the instruction cache may be trashed every iteration.
+
+ You may use partial loop unrolling, in that method you process 
+ several loop indexes in one loop iteration (see example below).
+ The following example program tests partial loop unrolling on VMS:
+
+
+      PROGRAM CPUCLK
+C     ------------------------------------------------------------------
+      INCLUDE '($JPIDEF)'
+C     ------------------------------------------------------------------
+      INTEGER       
+     *              TIME1, TIME2,
+     *              I
+C     ------------------------------------------------------------------
+      REAL
+     *              TMP
+C     ------------------------------------------------------------------
+      CALL LIB$GETJPI(JPI$_CPUTIM,,,TIME1)
+C     ------------------------------------------------------------------
+      TMP = 0.0
+      DO I = 1, 1000000
+        TMP = TMP + 1.0 / REAL(I)
+      ENDDO
+      WRITE(*,*) ' Sum of original loop: ', TMP
+C     ------------------------------------------------------------------
+      CALL LIB$GETJPI(JPI$_CPUTIM,,,TIME2)
+      WRITE(*,*) ' Time of original loop: ', TIME2 - TIME1
+      CALL LIB$GETJPI(JPI$_CPUTIM,,,TIME1)
+C     ------------------------------------------------------------------
+      TMP = 0.0
+      DO I = 1, 1000000, 4
+        TMP = TMP + 1.0 / REAL(I)   + 1.0 / REAL(I+1)
+     &amp;            + 1.0 / REAL(I+2) + 1.0 / REAL(I+3)
+      ENDDO
+      WRITE(*,*) ' Sum of unrolled loop: ', TMP
+C     ------------------------------------------------------------------
+      CALL LIB$GETJPI(JPI$_CPUTIM,,,TIME2)
+      WRITE(*,*) ' Time of unrolled loop: ', TIME2 - TIME1
+C     ------------------------------------------------------------------
+      END
+
+
+ This example program tests partial loop unrolling (by a factor of 4). 
+ The only result-related I/O is a single WRITE statement (added so the 
+ compiler wouldn't optimize away all computations).
+
+ Note that the partial unrolling of the loop, made it possible to save 
+ some operations, we don't have to add every term of the series to the 
+ partial-sum accumulator TMP, instead of: 
+
+      TMP = TMP + 1.0 / REAL(I)
+      TMP = TMP + 1.0 / REAL(I+1)
+      TMP = TMP + 1.0 / REAL(I+2) 
+      TMP = TMP + 1.0 / REAL(I+3)
+
+ with 4 assignments, we have:
+
+      TMP = TMP + 1.0 / REAL(I)   + 1.0 / REAL(I+1)
+     &amp;          + 1.0 / REAL(I+2) + 1.0 / REAL(I+3)
+
+ with the same number of arithmetic operations, but only one assignment. 
+ If TMP is not kept in a register this could be significant since the 
+ main memory is about one order of magnitude slower than CPU registers.
+
+ The same saving of "memory references" can occur in a nest of loops,
+ let's generalize a bit the previous example: 
+
+      INTEGER  I, J
+      REAL     A(M)
+
+      DO J = 1, 2*N
+        DO I = 1, M
+          A(I) = A(I) + 1.0 / REAL(I+J)
+        END DO
+      END DO
+
+ For every array element A(I), 2*N stores are performed, one for each
+ iteration of the outer loop. Let's unroll the outer loop two times,
+ and perform "two iterations in one go":
+
+      DO J = 1, 2*N, 2
+        DO I = 1, M
+          A(I) = A(I) + 1.0 / REAL(I+J)
+        END DO
+        DO I = 1, M
+          A(I) = A(I) + 1.0 / REAL(I+J+1)
+        END DO
+      END DO
+
+ We can perform "loop fusion" on the two new inner loops:
+
+      DO J = 1, 2*N, 2
+        DO I = 1, M
+          A(I) = A(I) + 1.0 / REAL(I+J)
+          A(I) = A(I) + 1.0 / REAL(I+J+1)
+        END DO
+      END DO
+
+ "Fusing" the two inner statements we get:
+
+      DO J = 1, 2*N, 2
+        DO I = 1, M
+          A(I) = A(I) + 1.0 / REAL(I+J) + 1.0 / REAL(I+J+1)
+        END DO
+      END DO
+
+ We can interchange the two loops to minimize paging activity 
+ and cache misses:
+
+      DO I = 1, M
+        DO J = 1, 2*N, 2
+          A(I) = A(I) + 1.0 / REAL(I+J) + 1.0 / REAL(I+J+1)
+        END DO
+      END DO
+
+ Here only N stores are performed to each array element. 
+
+ Two remarks:
+
+   1) Interchanging the two loops from the beginning, and 
+      unrolling the J-loop would be a shorter procedure. 
+      However, loop interchanging is not always possible.
+
+   2) In any case we will pay the price of making the loop
+      nest more complicated.
+
+
+ Loop interchange
+ ----------------
+ Changing the nesting order of loops is a powerful technique. 
+ In a previous section we saw that a proper nesting order can improve 
+ the localization of memory references. In other cases it may enable 
+ further loop transformations.
+
+ Let's examine if it's possible to interchange simple loop nests of 
+ the form:
+
+      INTEGER    M, N, IOFF, JOFF, I, J
+      PARAMETER  (M = ???, N = ???, IOFF = ???, JOFF = ???)
+      REAL       A(M,N)
+
+      DO I = 1, M
+        DO J = 1, N
+          A(I,J) = some-function-of(A(I+IOFF, J+JOFF))
+        END DO
+      END DO
+
+ We have here a "self-modifying array", the loop nest scans the array in 
+ the "wrong" way, i.e. row after row. Of course, the ranges of the loops
+ should be modified so array reference doesn't get out of bounds.
+
+ Will the interchanged nest:
+
+      DO J = 1, N
+        DO I = 1, M
+          A(I,J) = some-function-of(A(I+IOFF, J+JOFF))
+        END DO
+      END DO
+
+ give the same results?
+
+ Possible values of (IOFF, JOFF) parameters can be partitioned into 4 
+ regions, by the lines IOFF = 0, and JOFF = 0:
+
+           IOFF = 0
+              |
+     Absolute | Reversing
+       past   |   zone
+   -----------+----------- JOFF = 0
+    Reversing | Absolute
+      zone    |  future
+              |
+
+ Having IOFF and JOFF in the "absolute" regions,
+ .................................................
+
+
+ Loop blocking (tiling)
+ ----------------------
+ Cache misses and paging activity can be minimized by partitioning
+ large matrices to small enough rectangular blocks. This can be done
+ by partitioning the "iteration space" into blocks. 
+
+ A good example is matrix multiplication of square matrices:
+
+      INTEGER  I, J, K
+      REAL     A(N,N), B(N,N), C(N,N)
+
+      DO J = 1, N
+        DO I = 1, N
+          A(I,J) = 0.0
+        END DO
+      END DO
+
+      DO I = 1, N
+        DO J = 1, N
+          DO K = 1, N
+            A(I,J) = A(I,J) + B(I,K) * C(K,J)
+          END DO
+        END DO
+      END DO
+
+ This loop nest implements  A = B X C.  The inner K-loop performs a dot 
+ product of the I-th row of matrix B, with the J-th column of matrix C.
+ On every execution of the K-loop we get references all over B and C.
+
+ We can block an ordinary loop:
+
+      DO I = 1, N
+        .........
+      END DO
+
+ If we replace it with:
+
+      DO IT = 1, N, IS
+        DO I = IT , MIN(N, IT+IS-1)
+          .........................
+        END DO
+      END DO
+
+ The outer loop goes over the "blocks", the inner traverses each block
+ in its turn. The block size IS, should be choosed to fit in the cache
+ or a page (whichever is smaller). 
+
+ Performing blocking on all three loops:
+
+      DO IT = 1, N, IS
+      DO I = IT, MIN(N, IT+IS-1)
+        DO JT = 1, N, JS
+        DO J = JT, MIN(N, JT+JS-1)
+          DO KT = 1, N, KS
+          DO K = KT, MIN(N, KT+KS-1)
+            A(I,J) = A(I,J) + B(I,K) * C(K,J)
+          END DO
+          END DO
+        END DO
+        END DO
+      END DO
+      END DO
+
+ Here loop interchanging can be performed to yield:
+
+      DO IT = 1, N, IS
+      DO JT = 1, N, JS
+      DO KT = 1, N, KS
+        DO I = IT, MIN(N, IT+IS-1)
+        DO J = JT, MIN(N, JT+JS-1)
+        DO K = KT, MIN(N, KT+KS-1)
+          A(I,J) = A(I,J) + B(I,K) * C(K,J)
+        END DO
+        END DO
+        END DO
+      END DO
+      END DO
+      END DO
+
+ The size of each 3D block is IS * JS * KS, it should fit in the cache
+ or a memory page.
+
+ This horrible loop nest has more overhead in loop initializing and 
+ control, but paging activity is minimized and reusing data already
+ in cache is maximized.
+
+
+ Data Flow Analysis (DFA)
+ ------------------------
+ Compilers can 'follow' the computations in a program to some degree, 
+ and detect the points at which the variables get modified. This is
+ called DATA-FLOW ANALYSIS. The information gathered in this way is 
+ used to identify safe code optimizations automatically. 
+
+ Theoretical considerations may limit data-flow analysis, DFA seems 
+ more difficult than the famous halting problem, a problem known to
+ be undecidable, i.e. a general algorithm doesn't exist. So it's 
+ probably impossible to have a general DFA analyzer - a program that 
+ can perform complete data-flow analysis on every possible program.
+
+ Real DFA has additional limitations that theoretical DFA may ignore, 
+ there are some things the compiler cannot know, e.g. what value a user 
+ will supply interactively at run time. Even more stringent limits are 
+ usually imposed in practice to keep compilation times reasonably short,
+ so compilers doesn't even try to perform complete DFAs.
+  
+ In the following sections you will see that good programming practises 
+ usually help the compiler optimize your code. Efficient code doesn't
+ have to be ugly, on the contrary, ugly code doesn't optimize well.
+
+ 
+ Programming practises that may help compiler optimization
+ ---------------------------------------------------------
+ 1) Using VARIABLE FORMATS instead of RUN-TIME FORMATS.
+    Variable formats are non-standard in all Fortrans, and not 
+    widely supported either, but are a pretty cool extension.
+
+    Variable format is compiled to some degree, run-time 
+    format is done by the format control interpreter at run-time.
+    See the chapter on formats for more information.
+
+ 2) Using small simple statement functions (compiler dependant)
+
+ 3) Avoid implied do loops in I/O statements. You can use 
+    the array name (if not passed in the assumed-size method).
+
+    Many compilers do detect cases where the implied-DO construct 
+    clearly identifies an ordered "chunk" of memory just as if an 
+    EQUIVALENCEd array is involved, and thus optimize that accordingly.  
+    Some (like DEC ones, I believe) can even handle those that are 
+    "chunked" with a constant "stride" between elements 
+    (e.g. "WRITE (10) (A(I),I=1,10000,2)").
+
+ 4) Using the system low-level I/O routines (non-standard!)
+
+ 5) Using larger I/O blocks, pre-allocation of disk area for 
+    a file (instead of repeatedly extending it) (non-standard!)
+
+
+ Programming practises that may hinder compiler optimizations
+ ------------------------------------------------------------
+ 1) Partitioning the program to procedures, the compiler may not
+    perform the data-flow analysis on variables and arrays that
+    are passed between compilation units.
+
+ 2) Declaring too many variables and arrays, the data-flow analysis
+    may be limited to some predetermined number of variables. 
+    Such a problem may happen in routines or main programs that are
+    very large.
+
+ 3) Using unnecessary common blocks, the compiler may not perform
+    data-flow analysis on variables belonging to a common block,
+    especially if there is a call to another routine in which the 
+    same common block is declared.
+
+ 4) Variables that are used in Variable Format Expressions may be
+    excluded from analysis.
+
+ 5) Equivalenced variables are too much bother, so the compiler
+    may not analyze them individually.
+
+ 6) Using control constructs like an ASSIGNED GOTO may make some
+    compilers give up further analysis.
+
+
+ Programming practises that inhibit compiler optimizations
+ ---------------------------------------------------------
+ 1) Partitioning the program to several files, the compiler can't
+    perform the data-flow analysis on variables and arrays that
+    are passed to/from such external compilation units.
+
+ 2) Declaring variables as volatile, makes the compiler exclude
+    them from analysis. Volatile variables are used in procedures
+    that are executed when an interrupt or exception seizes control
+    (e.g. floating-point underflow handlers).
+
+
+ A performance detrimental FORTRAN statement
+ -------------------------------------------
+ On delimited-variable-size files, and on counted-variable-length files 
+ that don't have a suffix count field (VMS), backspacing may be very
+ inefficient (see the files and records chapter).
+
+ On such files BACKSPACE goes to the beginning of the file, and reads all 
+ previous records. 
+
+
+</PRE>
+<A href="http://www.ibiblio.org/pub/languages/fortran/unfp.html#section-1"> Return to contents page </A>
+<HR>
+<BR>
+<BR>
+<BR>
+
+
+
+</BODY></HTML>

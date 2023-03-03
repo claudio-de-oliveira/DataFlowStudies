@@ -1,0 +1,63 @@
+\documentclass[landscape]{article}
+\usepackage{graphicx}
+
+\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[all]{xy}
+
+\usepackage {vmargin}           % para setar formato da página + facilmente
+\usepackage {color}
+
+% Dimensões a ocupar na página (package Vmargin)
+\setpapersize [landscape]{A4}
+\setmarginsrb {25mm} % margem esquerda
+              {25mm} % margem topo
+              {20mm} % margem direita
+              {20mm} % margem pé
+              {2ex}  % altura do espaço para cabeçalho
+              {2ex}  % espaço entre fim do cabeçalho e início do texto
+              {2ex}  % altura do espaço para rodapé
+              {2ex}  % espaço entre fim do texto e fim do rodapé
+
+\begin{document}
+
+\input ReachableDefinition
+\clearpage
+
+\input LiveVariable
+\clearpage
+
+\input AvailableExpressions
+\clearpage
+
+\input AnticipableExpressions
+\clearpage
+
+\input PartiallyAvailableExpressions
+\clearpage
+
+\input DeadVariable
+\clearpage
+
+\input DefinitionsForCopyPropagation
+\clearpage
+
+\input PartialRedundancy
+\clearpage
+
+\input ConstantPropagation
+\clearpage
+
+\xy/r8pc/:*++\txt\huge{C}="c"
+,0*++\txt\huge{P}="p",
+,"p",{\ar@*{[|(1)]}"p";"c"<20pt>}
+,"p",{\ar@*{[|(4)]}"p";"c"<14pt>}
+,"p",{\ar@*{[|(10)]}"p";"c"<4pt>}
+,"p",{\ar@*{[|(20)]}"p";"c"<-16pt>}
+\endxy
+
+\begin{scriptsize}
+\end{scriptsize}
+
+\end{document}

@@ -1,0 +1,80 @@
+\documentclass[landscape]{article}
+\usepackage{graphicx}
+
+%\usepackage[brazil]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[all]{xy}
+
+\usepackage {vmargin}           % para setar formato da página + facilmente
+\usepackage {color}
+
+% Dimensões a ocupar na página (package Vmargin)
+\setpapersize [landscape]{A4}
+\setmarginsrb {25mm} % margem esquerda
+              {25mm} % margem topo
+              {20mm} % margem direita
+              {20mm} % margem pé
+              {2ex}  % altura do espaço para cabeçalho
+              {2ex}  % espaço entre fim do cabeçalho e início do texto
+              {2ex}  % altura do espaço para rodapé
+              {2ex}  % espaço entre fim do texto e fim do rodapé
+
+\begin{document}
+
+\input ReachableDefinitions.tex
+\clearpage
+
+\input LiveVariable.tex
+\clearpage
+
+\input AvailableExpressions.tex
+\clearpage
+
+\input AnticipableExpressions.tex
+\clearpage
+
+\input PartiallyAvailableExpressions.tex
+\clearpage
+
+\input DeadVariable.tex
+\clearpage
+
+\input DefinitionsForCopyPropagation.tex
+\clearpage
+
+\input PartialRedundancy1.tex
+\clearpage
+
+\input ConstantPropagation.tex
+\clearpage
+
+\begin{scriptsize}
+\xy(0, 0)
+	*++{\txt{$\mathbf{B_{0}}$\\}}*\frm{-,}="B0";
+(0, -15)
+	*++{\txt{$\mathbf{B_{1}}$\\$if\:0\:goto\:@3$\\}}*\frm{-,}="B1";
+(25, -30)
+	*++{\txt{$\mathbf{B_{2}}$\\$t_{6}:=b+c$\\$a:=t_{6}$\\$goto\:@5$\\}}*\frm{-,}="B2";
+(-25, -30)
+	*++{\txt{$\mathbf{B_{3}}$\\$e:=7$\\}}*\frm{-,}="B3";
+(-25, -60)
+	*++{\txt{$\mathbf{B_{4}}$\\$d:=t_{6}$\\}}*\frm{-,}="B4";
+(25, -45)
+	*++{\txt{$\mathbf{B_{5}}$\\}}*\frm{-,}="B5";
+(-25, -45)
+	*++{\txt{$\mathbf{B_{6}}$\\$t_{6}:=b+c$\\}}*\frm{-,}="B6";
+(-25, -75)
+	*++{\txt{$\mathbf{B_{7}}$\\}}*\frm{-,}="B7";
+"B0";"B1" **@{.} ?> *{\dir{>}};
+"B1";"B3" **@{.} ?> *{\dir{>}};
+"B1";"B2" **@{.} ?> *{\dir{>}};
+"B2";"B5" **@{.} ?> *{\dir{>}};
+"B3";"B6" **@{.} ?> *{\dir{>}};
+"B4";"B7" **@{.} ?> *{\dir{>}};
+"B5";"B4" **@{.} ?> *{\dir{>}};
+"B6";"B4" **@{.} ?> *{\dir{>}};
+\endxy
+\end{scriptsize}
+\end{document}
+
